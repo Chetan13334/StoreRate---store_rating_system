@@ -1,15 +1,27 @@
-import { verifyToken } from '../utils/jwt.js';
-import { sendError } from '../utils/response.js';
+const jwt = require("jsonwebtoken");
 
-export const authMiddleware = (req, res, next) => {
-  const authHeader = req.headers.authorization;
-  const token = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null;
-  const decoded = verifyToken(token);
+exports.authenticate = (req, res, next) => {
+    try {
+        const authHeader = req.headers.authorization;
 
-  if (!decoded) {
-    return sendError(res, 401, 'Unauthorized');
-  }
+        if (!authHeader || !authHeader.startsWith("Bearer ")) {
+            return res.status(401).json({
+                success: false,
+                message: "Access denied. No token provided."
+            });
+        }
 
-  req.user = decoded;
-  next();
+        const token = authHeader.split(" ")[1];
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        req.user = decoded;
+
+        next();
+    } catch (error) {
+        return res.status(401).json({
+            success: false,
+            message: "Invalid or expired token."
+        });
+    }
 };
