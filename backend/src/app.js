@@ -22,7 +22,7 @@ app.use("/api/stores", storeRoutes);
 
 app.use("/api/ratings", ratingRoutes);
 
-app.use("/api/store-owner", ownerRoutes);
+app.use("/api/owner", ownerRoutes);
 
 
 module.exports = app;

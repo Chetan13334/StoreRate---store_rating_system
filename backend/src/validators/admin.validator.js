@@ -15,26 +15,26 @@ const validate = (req, res, next) => {
 
 const createUserValidator = [
     body("name")
+        .trim()
         .notEmpty()
         .withMessage("Name is required"),
 
     body("email")
+        .trim()
         .isEmail()
         .withMessage("Valid email is required"),
 
     body("password")
         .isLength({ min: 8, max: 16 })
-        .withMessage("Password must be between 8 and 16 characters")
-        .matches(/[A-Z]/)
-        .withMessage("Password must contain at least one uppercase letter")
-        .matches(/[!@#$%^&*(),.?":{}|<>]/)
-        .withMessage("Password must contain at least one special character"),
+        .withMessage("Password must be between 8 and 16 characters"),
 
     body("address")
+        .trim()
         .notEmpty()
         .withMessage("Address is required"),
 
     body("role")
+        .optional()
         .isIn(["ADMIN", "USER", "STORE_OWNER"])
         .withMessage("Invalid role"),
 

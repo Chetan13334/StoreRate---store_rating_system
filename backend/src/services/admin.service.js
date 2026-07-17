@@ -140,6 +140,7 @@ exports.createUser = async ({
     address,
     role,
 }) => {
+    const normalizedRole = (role || "USER").toUpperCase();
 
     const [existing] = await db.query(
         "SELECT id FROM users WHERE email=?",
@@ -163,7 +164,7 @@ exports.createUser = async ({
             email,
             hashedPassword,
             address,
-            role,
+            normalizedRole,
         ]
     );
 
@@ -172,7 +173,7 @@ exports.createUser = async ({
         name,
         email,
         address,
-        role,
+        role: normalizedRole,
     };
 };
 

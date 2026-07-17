@@ -8,7 +8,15 @@ exports.dashboard = async (req, res) => {
 
         res.json({
             success: true,
-            data
+            data: {
+                storeName: data.store?.name || "",
+                averageRating: data.average_rating ?? 0,
+                totalRatings: data.total_ratings ?? 0,
+                address: data.store?.address || "",
+                email: data.store?.email || "",
+                ownerName: data.store?.owner_name || "",
+                storeId: data.store?.id || null
+            }
         });
 
     } catch (err) {
