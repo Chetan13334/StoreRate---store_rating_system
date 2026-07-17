@@ -14,9 +14,18 @@ const validate = (req, res, next) => {
 };
 
 exports.storeValidator = [
-    body("name").notEmpty().withMessage("Store name is required"),
-    body("email").isEmail().withMessage("Valid email is required"),
-    body("address").notEmpty().withMessage("Address is required"),
+    body("name")
+        .trim()
+        .isLength({ min: 20, max: 60 })
+        .withMessage("Store name must be between 20 and 60 characters"),
+    body("email")
+        .trim()
+        .isEmail()
+        .withMessage("Valid email is required"),
+    body("address")
+        .trim()
+        .isLength({ max: 400 })
+        .withMessage("Address must be at most 400 characters"),
     body("owner_id").isInt().withMessage("Valid owner id is required"),
     validate,
 ];

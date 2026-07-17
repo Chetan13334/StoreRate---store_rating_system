@@ -1,4 +1,5 @@
 const storeService = require("../services/store.service");
+const adminService = require("../services/admin.service");
 
 exports.createStore = async (req, res) => {
     try {
@@ -33,11 +34,18 @@ exports.getAllStores = async (req, res) => {
             order = "DESC"
         } = req.query;
 
-        const stores = await adminService.getStores(
-            search,
-            sortBy,
-            order
-        );
+        const stores = req.user?.role === "USER"
+            ? await storeService.getAllStoresForUser(
+                req.user.id,
+                search,
+                sortBy,
+                order
+            )
+            : await adminService.getStores(
+                search,
+                sortBy,
+                order
+            );
 
         res.status(200).json({
             success: true,

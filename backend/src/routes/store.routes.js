@@ -17,8 +17,16 @@ router.post(
     storeValidator,
     storeController.createStore
 );
+
 router.get(
     "/all",
+    authenticate,
+    authorize("USER"),
+    storeController.getAllStores
+);
+
+router.get(
+    "/",
     authenticate,
     authorize("USER"),
     storeController.getAllStores

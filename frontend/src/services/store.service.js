@@ -1,7 +1,7 @@
 import api from "./api";
 
 const getStores = async (params = {}) => {
-  const response = await api.get("/stores", {
+  const response = await api.get("/stores/all", {
     params,
   });
 

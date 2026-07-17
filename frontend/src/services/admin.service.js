@@ -18,6 +18,11 @@ const createUser = async (data) => {
   return response.data;
 };
 
+const createStore = async (data) => {
+  const response = await api.post("/stores", data);
+  return response.data;
+};
+
 const getStores = async (params = {}) => {
   const response = await api.get("/admin/stores", {
     params,
@@ -35,6 +40,7 @@ export default {
   getDashboard,
   getUsers,
   createUser,
+  createStore,
   getStores,
   getUserDetails,
 };

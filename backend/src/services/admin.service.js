@@ -15,10 +15,15 @@ exports.getDashboard = async () => {
         "SELECT COUNT(*) AS totalRatings FROM ratings"
     );
 
+    const [[owners]] = await db.query(
+        "SELECT COUNT(*) AS totalOwners FROM users WHERE role = 'STORE_OWNER'"
+    );
+
     return {
         totalUsers: users.totalUsers,
         totalStores: stores.totalStores,
-        totalRatings: ratings.totalRatings
+        totalRatings: ratings.totalRatings,
+        totalOwners: owners.totalOwners
     };
 };
 

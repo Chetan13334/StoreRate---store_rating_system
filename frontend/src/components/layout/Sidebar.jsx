@@ -58,6 +58,11 @@ const Sidebar = () => {
               Add User
             </NavLink>
 
+            <NavLink to="/admin/add-store" className={linkStyle}>
+              <Store size={18} />
+              Add Store
+            </NavLink>
+
             <NavLink to="/admin/stores" className={linkStyle}>
               <Store size={18} />
               Stores

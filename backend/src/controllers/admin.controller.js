@@ -58,9 +58,17 @@ exports.getStores = async (req, res) => {
 
     try {
 
-        const search = req.query.search || "";
+        const {
+            search = "",
+            sortBy = "id",
+            order = "DESC"
+        } = req.query;
 
-        const stores = await adminService.getStores(search);
+        const stores = await adminService.getStores(
+            search,
+            sortBy,
+            order
+        );
 
         res.status(200).json({
             success: true,

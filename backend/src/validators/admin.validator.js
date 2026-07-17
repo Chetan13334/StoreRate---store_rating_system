@@ -16,8 +16,8 @@ const validate = (req, res, next) => {
 const createUserValidator = [
     body("name")
         .trim()
-        .notEmpty()
-        .withMessage("Name is required"),
+        .isLength({ min: 20, max: 60 })
+        .withMessage("Name must be between 20 and 60 characters"),
 
     body("email")
         .trim()
@@ -26,12 +26,16 @@ const createUserValidator = [
 
     body("password")
         .isLength({ min: 8, max: 16 })
-        .withMessage("Password must be between 8 and 16 characters"),
+        .withMessage("Password must be between 8 and 16 characters")
+        .matches(/[A-Z]/)
+        .withMessage("Password must contain at least one uppercase letter")
+        .matches(/[!@#$%^&*(),.?":{}|<>]/)
+        .withMessage("Password must contain at least one special character"),
 
     body("address")
         .trim()
-        .notEmpty()
-        .withMessage("Address is required"),
+        .isLength({ max: 400 })
+        .withMessage("Address must be at most 400 characters"),
 
     body("role")
         .optional()
