@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Star, X } from "lucide-react";
+import toast from "react-hot-toast";
 
 import ratingService from "../../services/rating.service";
 import Button from "../common/Button";
@@ -24,7 +25,7 @@ const RatingForm = ({
 
   const handleSubmit = async () => {
     if (!rating) {
-      alert("Please select a rating.");
+      toast.error("Please select a rating.");
       return;
     }
 
@@ -43,25 +44,22 @@ const RatingForm = ({
         });
       }
 
-      alert("Rating submitted successfully.");
+      toast.success("Rating saved successfully.");
 
       refresh();
       onClose();
 
     } catch (error) {
-      alert(
-        error.response?.data?.message ||
-        "Unable to submit rating."
-      );
+      toast.error(error.response?.data?.message || "Unable to submit rating.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/55 backdrop-blur-sm px-4">
 
-      <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
+      <div className="w-full max-w-md rounded-3xl border border-white/60 bg-white p-6 shadow-2xl">
 
         <div className="mb-5 flex items-center justify-between">
 
@@ -73,7 +71,7 @@ const RatingForm = ({
 
           <button
             onClick={onClose}
-            className="rounded p-1 hover:bg-gray-100"
+            className="rounded-xl p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-900"
           >
             <X size={22} />
           </button>
@@ -82,11 +80,11 @@ const RatingForm = ({
 
         <div className="mb-5">
 
-          <h3 className="text-xl font-semibold">
+          <h3 className="text-xl font-bold text-slate-900">
             {store.name}
           </h3>
 
-          <p className="text-gray-500">
+          <p className="text-sm text-slate-500">
             {store.address}
           </p>
 
@@ -106,11 +104,11 @@ const RatingForm = ({
               <Star
                 size={42}
                 className={
-                  star <= (hover || rating)
-                    ? "fill-yellow-400 text-yellow-400 transition"
-                    : "text-gray-300 transition"
-                }
-              />
+                star <= (hover || rating)
+                    ? "fill-amber-400 text-amber-400 transition drop-shadow"
+                    : "text-slate-200 transition"
+              }
+            />
             </button>
 
           ))}
@@ -119,10 +117,8 @@ const RatingForm = ({
 
         <div className="mb-6 text-center">
 
-          <span className="rounded-lg bg-blue-100 px-4 py-2 font-semibold text-blue-700">
-
+          <span className="inline-flex items-center rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-slate-900/10">
             Selected Rating : {rating}
-
           </span>
 
         </div>

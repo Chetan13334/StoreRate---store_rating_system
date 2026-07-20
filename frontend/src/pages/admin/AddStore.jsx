@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import Card from "../../components/common/Card";
 import Input from "../../components/common/Input";
@@ -65,10 +66,10 @@ const AddStore = () => {
         ...form,
         owner_id: Number(form.owner_id),
       });
-      alert("Store created successfully.");
+      toast.success("Store created successfully");
       navigate("/admin/stores");
     } catch (error) {
-      alert(error.response?.data?.message || "Unable to create store.");
+      toast.error(error.response?.data?.message || "Unable to create store.");
     } finally {
       setLoading(false);
     }

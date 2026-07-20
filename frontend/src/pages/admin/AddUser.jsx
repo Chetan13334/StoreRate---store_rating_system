@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import Card from "../../components/common/Card";
 import Input from "../../components/common/Input";
@@ -78,14 +79,11 @@ const AddUser = () => {
 
       await adminService.createUser(form);
 
-      alert("User created successfully.");
+      toast.success("User created successfully");
 
       navigate("/admin/users");
     } catch (error) {
-      alert(
-        error.response?.data?.message ||
-          "Unable to create user."
-      );
+      toast.error(error.response?.data?.message || "Unable to create user.");
     } finally {
       setLoading(false);
     }
